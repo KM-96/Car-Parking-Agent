@@ -14,10 +14,10 @@ public class ParkControler : MonoBehaviour
     {
         if (other.gameObject)
         {
-            other.GetComponent<CarController>().enabled = false;
-            lt.color = Color.green;
-            hasPark = true;
-            Destroy(parkPrefab, 1);
+                other.GetComponent<CarAgent>().enabled = false;
+                lt.color = Color.green;
+                hasPark = true;
+                Destroy(parkPrefab, 1);
         }
     }
 }

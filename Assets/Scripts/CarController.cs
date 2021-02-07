@@ -38,9 +38,13 @@ public class CarController : MonoBehaviour
     }
     void Movement()
     {
+
+        Debug.Log(transform.forward);
+        Debug.Log(carSpeed);
         Vector3 forward = (transform.forward * carSpeed);
+        Debug.Log(forward);
         carRb.AddForce(forward);
-        
+
         if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
             transform.Rotate(Vector3.up * carTurnSpeed);
@@ -53,6 +57,7 @@ public class CarController : MonoBehaviour
     }
     void Stun()
     {
+        Debug.Log("Stun");
         if (isStun)
         {
             carRb.isKinematic = true;

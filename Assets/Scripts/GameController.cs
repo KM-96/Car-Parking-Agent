@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Game Controller start method");
         parkPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("ParkSpawnPoints"));
     }
     void Update()
@@ -29,10 +28,12 @@ public class GameController : MonoBehaviour
     }
     void SpawnPrefabs()
     {
-        int randomCar = Random.Range(0, carPrefabs.Length);
+        // KM: We will stick to only BatMobil for our project 
+        int randomCar = 1;
         int randomCarSpot = Random.Range(0, startPoints.Length);
         int randomPark = Random.Range(0, parkPrefabs.Length);
         int randomParkSpot = Random.Range(0, parkPoints.Count);
+
 
         if (carCount == 0)
         {
@@ -41,7 +42,7 @@ public class GameController : MonoBehaviour
             parkPoints.RemoveAt(randomParkSpot);
             carCount++;
             waveNumber++;
-            CarController.FindObjectOfType<CarController>().isStun = true;
+            CarAgent.FindObjectOfType<CarAgent>().isStun = true;
         }
         if (ParkControler.FindObjectOfType<ParkControler>().hasPark == true && carCount == waveNumber)
         {
@@ -51,12 +52,13 @@ public class GameController : MonoBehaviour
             parkPoints.RemoveAt(randomParkSpot);
             carCount++;
             waveNumber++;
-            CarController.FindObjectOfType<CarController>().isStun = true;
+            CarAgent.FindObjectOfType<CarAgent>().isStun = true;
             cameraFollow.FindObjectOfType<cameraFollow>().targets.RemoveAt(0);
         }
         if (carCount == 9) // next level
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
     private Vector3 PowerUpSpawnPosition()

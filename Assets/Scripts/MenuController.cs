@@ -25,7 +25,7 @@ public class MenuController : MonoBehaviour
     }
     public void StopFreeze()
     {
-        CarController.FindObjectOfType<CarController>().isStun = false;
+        CarAgent.FindObjectOfType<CarAgent>().isStun = false;
     }
     public void firstLevel()
     {

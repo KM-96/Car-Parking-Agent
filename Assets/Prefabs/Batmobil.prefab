@@ -509,7 +509,10 @@ GameObject:
   - component: {fileID: 6314483756655966236}
   - component: {fileID: 9072589858213667644}
   - component: {fileID: 659339997987954043}
-  - component: {fileID: -4931110448664548917}
+  - component: {fileID: -7490361952049570920}
+  - component: {fileID: 7223892654839919173}
+  - component: {fileID: -4161515830832860179}
+  - component: {fileID: 2201708393416912087}
   m_Layer: 0
   m_Name: Batmobil
   m_TagString: Car
@@ -567,7 +570,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7800186, y: 0.29446068, z: 1.1434348}
   m_Center: {x: 0.008460705, y: -0.029053414, z: 0.20319873}
---- !u!114 &-4931110448664548917
+--- !u!114 &-7490361952049570920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -576,14 +579,86 @@ MonoBehaviour:
   m_GameObject: {fileID: 6314483756655966237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05116bc97b7ec84d973dc358d9eca06, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpPrefab: {fileID: 0}
-  hasPowerUp: 0
-  carSpeed: 800
+  m_BrainParameters:
+    VectorObservationSize: 1
+    NumStackedVectorObservations: 1
+    VectorActionSize: 03000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: MoveToGoalAgent
+  TeamId: 0
+  m_UseChildSensors: 1
+--- !u!114 &7223892654839919173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314483756655966237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e05d23b083f7a54c88c67fb5b3b9b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  powerUpPrefab: {fileID: 7013581626716515886, guid: 838978aa20d94e6488a2f6aaaeb4b371,
+    type: 3}
+  target: {fileID: 0}
+  carSpeed: 500
   carTurnSpeed: 5
   isStun: 1
+  hasPowerUp: 0
+--- !u!114 &-4161515830832860179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314483756655966237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensor
+  m_DetectableTags:
+  - ParkSpawnPoints
+  - Obstacle
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 100.7
+  m_SphereCastRadius: 0.5
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0.5
+  m_EndVerticalOffset: 0.5
+--- !u!114 &2201708393416912087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314483756655966237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 1
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &6314483756816805052
 GameObject:
   m_ObjectHideFlags: 0
