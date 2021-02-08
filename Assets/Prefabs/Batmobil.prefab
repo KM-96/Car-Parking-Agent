@@ -583,7 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 6
     NumStackedVectorObservations: 1
     VectorActionSize: 03000000
     VectorActionDescriptions: []
@@ -610,9 +610,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  powerUpPrefab: {fileID: 7013581626716515886, guid: 838978aa20d94e6488a2f6aaaeb4b371,
-    type: 3}
-  target: {fileID: 0}
   carSpeed: 500
   carTurnSpeed: 5
   isStun: 1
@@ -642,7 +639,7 @@ MonoBehaviour:
     m_Bits: 4294967291
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  rayMissColor: {r: 0.03773582, g: 0.036845826, b: 0.036845826, a: 1}
   m_StartVerticalOffset: 0.5
   m_EndVerticalOffset: 0.5
 --- !u!114 &2201708393416912087
