@@ -37,7 +37,6 @@ public class CarAgent : Agent
     public override void OnEpisodeBegin()
     {
         bestDistance = 30f;
-        SetReward(0f);
     }
 
     public override void OnActionReceived(float[] actions)
@@ -47,33 +46,29 @@ public class CarAgent : Agent
             Vector3 forward = (transform.forward * carSpeed);
             carRb.AddForce(forward);
         }
-        if (Mathf.FloorToInt(actions[0]) == 1)
+        else if (Mathf.FloorToInt(actions[0]) == 1)
         {
             transform.Rotate(Vector3.up * carTurnSpeed);
         }
-        if (Mathf.FloorToInt(actions[0]) == 2)
+        else 
         {
             transform.Rotate(Vector3.down * carTurnSpeed);
         }
         float distanceToTarget = Vector3.Distance(this.transform.position, target.transform.position);
-        //Debug.Log("My Pos  = " + this.transform.position + " TargetPos = " + target.transform.position);
         if (distanceToTarget < bestDistance)
         {
-            Debug.Log("Double Positive Reward =" + (bestDistance * 2/ distanceToTarget) + " DistanceToTarget = " + distanceToTarget + " Distance = " + bestDistance + " Cumulative reward = " + GetCumulativeReward());
-            AddReward(bestDistance  * 2 /distanceToTarget);
+            AddReward(0.01f);
             bestDistance = distanceToTarget;
             previousDistance = distanceToTarget;
         } 
         else if (distanceToTarget < previousDistance)
         { 
-            Debug.Log("Positive Reward = " + (previousDistance / distanceToTarget)+ " DistanceToTarget = " + distanceToTarget + " Distance = " + previousDistance + " Cumulative reward = " + GetCumulativeReward());
-            AddReward(previousDistance / distanceToTarget);
+            AddReward(0.01f);
             previousDistance = distanceToTarget;
         }
         else
         {
-            Debug.Log("Negative Reward = " + (-previousDistance / distanceToTarget) + " DistanceToTarget = " + distanceToTarget + " Distance = " + previousDistance + " Cumulative reward = " + GetCumulativeReward());
-            AddReward(-previousDistance/distanceToTarget);
+            AddReward(-0.02f);
             previousDistance = distanceToTarget;
         }
     }
@@ -99,27 +94,21 @@ public class CarAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
         if(other.gameObject.tag == "Park")
         {
-            Debug.Log(" Park Cumulative Reward = " + GetCumulativeReward());
-            AddReward(Mathf.Abs(GetCumulativeReward()) * 2);
-            Debug.Log(" Park Cumulative Reward = " + GetCumulativeReward());
+            AddReward(1f);
             EndEpisode();
         }
         if (other.gameObject.tag == "Obstacle" && !hasPowerUp)
         {
-            AddReward(-1 * Mathf.Abs(GetCumulativeReward()) * 3);
-            Debug.Log("Obstacle Cumulative Reward = " + GetCumulativeReward());
+            AddReward(-0.1f);
             EndEpisode();
             this.transform.position = curPos;
             this.transform.eulerAngles = curRot;
         }
         if (other.gameObject.tag == "Wall" && !hasPowerUp)
         {
-            //AddReward(-1 * Mathf.Abs(GetCumulativeReward()) * 3);
-            SetReward(0f);
-            Debug.Log("Wall Cumulative Reward = " + GetCumulativeReward());
+            AddReward(-0.1f);
             EndEpisode();
             this.transform.position = curPos;
             this.transform.eulerAngles = curRot;
@@ -138,6 +127,6 @@ public class CarAgent : Agent
             this.transform.position = GameObject.Find("Portal_1").transform.position + offset;
             this.transform.eulerAngles = new Vector3(0, 135, 0);
         }
-        Debug.Log("Reward = " + GetCumulativeReward());
+        
     }
 }

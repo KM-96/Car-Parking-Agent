@@ -26,12 +26,13 @@ public class GameController : MonoBehaviour
     {
         if (ParkControler.FindObjectOfType<ParkControler>().hasPark == true)
         {
-            Destroy(car, 1);
+            Destroy(car);
             int randomCar = 0;
             int randomCarSpot = Random.Range(0, startPoints.Length);
 
-            float value = Random.Range(-14, 14);
-            target.transform.position = new Vector3(value, 0.3f, value);
+            int randomXValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -5) : Random.Range(8, 14);
+            int randomYValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -8) : Random.Range(3, 14);
+            target.transform.position = new Vector3(randomXValue, 0.3f, randomYValue);
 
             car = Instantiate(carPrefabs[randomCar], startPoints[randomCarSpot].transform.position, startPoints[randomCarSpot].transform.rotation);
             Instantiate(parkPrefabs[0], target.transform.position, target.transform.rotation);
