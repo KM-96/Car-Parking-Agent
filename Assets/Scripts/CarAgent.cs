@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
+using System;
 
 /*
  * Agent Actions - Turn Right, Turn Left, Do Nothing
@@ -14,6 +15,7 @@ public class CarAgent : Agent
     private Rigidbody carRb;
     private Vector3 curPos, curRot;
     private GameObject target;
+    private bool isColliding = false;
     public float carSpeed = 800f;
     public float carTurnSpeed = 5.0f;
     public bool isStun = true;
@@ -58,17 +60,20 @@ public class CarAgent : Agent
         if (distanceToTarget < bestDistance)
         {
             AddReward(0.01f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             bestDistance = distanceToTarget;
             previousDistance = distanceToTarget;
         } 
         else if (distanceToTarget < previousDistance)
         { 
             AddReward(0.01f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             previousDistance = distanceToTarget;
         }
         else
         {
             AddReward(-0.02f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             previousDistance = distanceToTarget;
         }
     }
@@ -92,23 +97,40 @@ public class CarAgent : Agent
         sensor.AddObservation(target.transform.position);
     }
 
+    void Update()
+    {
+        isColliding = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Park")
+        if (isColliding)
         {
+            return;
+        }
+        isColliding = true;
+
+        if (other.gameObject.tag == "Park")
+        {
+            ScoreScript.parkingScoreValue++;
             AddReward(1f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
         }
         if (other.gameObject.tag == "Obstacle" && !hasPowerUp)
         {
+            ScoreScript.obstacleHitScoreValue++;
             AddReward(-0.1f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;
             this.transform.eulerAngles = curRot;
         }
         if (other.gameObject.tag == "Wall" && !hasPowerUp)
         {
+            ScoreScript.wallHitScoreValue++;
             AddReward(-0.1f);
+            ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;
             this.transform.eulerAngles = curRot;
@@ -127,6 +149,5 @@ public class CarAgent : Agent
             this.transform.position = GameObject.Find("Portal_1").transform.position + offset;
             this.transform.eulerAngles = new Vector3(0, 135, 0);
         }
-        
     }
 }

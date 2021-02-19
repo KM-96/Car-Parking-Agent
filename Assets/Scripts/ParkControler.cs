@@ -12,8 +12,10 @@ public class ParkControler : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject)
+        Debug.Log("here");
+        if (other && other.gameObject && other.GetComponent<CarAgent>())
         {
+                Debug.Log(other);
                 other.GetComponent<CarAgent>().enabled = false;
                 lt.color = Color.green;
                 hasPark = true;
