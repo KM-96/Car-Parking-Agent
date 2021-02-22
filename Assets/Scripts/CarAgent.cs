@@ -16,12 +16,13 @@ public class CarAgent : Agent
     private Vector3 curPos, curRot;
     private GameObject target;
     private bool isColliding = false;
-    public float carSpeed = 800f;
-    public float carTurnSpeed = 5.0f;
+    public float carSpeed = 350f;
+    public float carTurnSpeed = 4.0f;
     public bool isStun = true;
     public bool hasPowerUp = false;
     private float bestDistance = 30f;
     private float previousDistance = 0f;
+    private float maxSteps = 50000;
 
     public void setTarget(GameObject target)
     {
@@ -59,20 +60,20 @@ public class CarAgent : Agent
         float distanceToTarget = Vector3.Distance(this.transform.position, target.transform.position);
         if (distanceToTarget < bestDistance)
         {
-            AddReward(0.01f);
+            AddReward(2f/maxSteps);
             ScoreScript.rewardValue = GetCumulativeReward();
             bestDistance = distanceToTarget;
             previousDistance = distanceToTarget;
         } 
         else if (distanceToTarget < previousDistance)
         { 
-            AddReward(0.01f);
+            AddReward(1f/maxSteps);
             ScoreScript.rewardValue = GetCumulativeReward();
             previousDistance = distanceToTarget;
         }
         else
         {
-            AddReward(-0.02f);
+            AddReward(-2f/maxSteps);
             ScoreScript.rewardValue = GetCumulativeReward();
             previousDistance = distanceToTarget;
         }
@@ -113,14 +114,14 @@ public class CarAgent : Agent
         if (other.gameObject.tag == "Park")
         {
             ScoreScript.parkingScoreValue++;
-            AddReward(1f);
+            AddReward(2f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
         }
         if (other.gameObject.tag == "Obstacle" && !hasPowerUp)
         {
             ScoreScript.obstacleHitScoreValue++;
-            AddReward(-0.1f);
+            AddReward(-0.2f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;
@@ -129,7 +130,7 @@ public class CarAgent : Agent
         if (other.gameObject.tag == "Wall" && !hasPowerUp)
         {
             ScoreScript.wallHitScoreValue++;
-            AddReward(-0.1f);
+            AddReward(-0.2f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;

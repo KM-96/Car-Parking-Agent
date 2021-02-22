@@ -584,7 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BrainParameters:
     VectorObservationSize: 6
-    NumStackedVectorObservations: 1
+    NumStackedVectorObservations: 3
     VectorActionSize: 03000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
@@ -610,8 +610,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  carSpeed: 1000
-  carTurnSpeed: 5
+  carSpeed: 350
+  carTurnSpeed: 4
   isStun: 0
   hasPowerUp: 0
 --- !u!114 &-4161515830832860179
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_DetectableTags:
   - ParkSpawnPoints
   - Obstacle
-  m_RaysPerDirection: 3
+  m_RaysPerDirection: 5
   m_MaxRayDegrees: 100.7
   m_SphereCastRadius: 0.5
   m_RayLength: 20
