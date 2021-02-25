@@ -16,12 +16,14 @@ public class CarAgent : Agent
     private Vector3 curPos, curRot;
     private GameObject target;
     private bool isColliding = false;
-    public float carSpeed = 800f;
-    public float carTurnSpeed = 5.0f;
+    public float carSpeed = 500f;
+    public float carTurnSpeed = 3.0f;
     public bool isStun = true;
     public bool hasPowerUp = false;
     private float bestDistance = 30f;
     private float previousDistance = 0f;
+    private GameObject[] obstacles;
+    private GameObject[] walls;
 
     public void setTarget(GameObject target)
     {
@@ -34,6 +36,9 @@ public class CarAgent : Agent
 
         curPos = this.transform.position;
         curRot = this.transform.eulerAngles;
+
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        walls = GameObject.FindGameObjectsWithTag("Wall");
     }
 
     public override void OnEpisodeBegin()
@@ -56,26 +61,40 @@ public class CarAgent : Agent
         {
             transform.Rotate(Vector3.down * carTurnSpeed);
         }
+
+        float[] distanceToWalls = {0, 0, 0, 0};
+        for(int i = 0; i < 4; i++) {
+            distanceToWalls[i] = Vector3.Distance(this.transform.position, walls[i].transform.position);
+            if(distanceToWalls[i] < 2f) {
+                AddReward(Constants.CLOSE_TO_WALL_REWARD);
+            }
+        }
+        
         float distanceToTarget = Vector3.Distance(this.transform.position, target.transform.position);
+        if (distanceToTarget < 2.5f) {
+            updateReward(Constants.CLOSEST_TO_TARGET_REWARD, distanceToTarget, false);
+        }
         if (distanceToTarget < bestDistance)
         {
-            AddReward(0.01f);
-            ScoreScript.rewardValue = GetCumulativeReward();
-            bestDistance = distanceToTarget;
-            previousDistance = distanceToTarget;
+            updateReward(Constants.BEST_DISTANCE_TO_TARGET_REWARD, distanceToTarget, true);
         } 
         else if (distanceToTarget < previousDistance)
         { 
-            AddReward(0.01f);
-            ScoreScript.rewardValue = GetCumulativeReward();
-            previousDistance = distanceToTarget;
+            updateReward(Constants.MOVING_TO_TARGET_REWARD, distanceToTarget, false);
         }
         else
         {
-            AddReward(-0.02f);
-            ScoreScript.rewardValue = GetCumulativeReward();
-            previousDistance = distanceToTarget;
+            updateReward(Constants.MOVING_AWAY_TARGET_REWARD, distanceToTarget, false);
         }
+        ScoreScript.rewardValue = GetCumulativeReward();
+    }
+
+    private void updateReward(float reward, float distanceToTarget, bool updateBestDistance) {
+        AddReward(reward);
+        if(updateBestDistance) {
+            bestDistance = distanceToTarget;
+        }
+        previousDistance = distanceToTarget;
     }
 
     public override void Heuristic(float[] actionsOut)
@@ -93,8 +112,14 @@ public class CarAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(this.transform.position);
-        sensor.AddObservation(target.transform.position);
+        sensor.AddObservation(this.transform.InverseTransformPoint(target.transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(obstacles[0].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(obstacles[1].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(obstacles[2].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(walls[0].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(walls[1].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(walls[2].transform.position).normalized);
+        sensor.AddObservation(this.transform.InverseTransformPoint(walls[3].transform.position).normalized);
     }
 
     void Update()
@@ -120,7 +145,7 @@ public class CarAgent : Agent
         if (other.gameObject.tag == "Obstacle" && !hasPowerUp)
         {
             ScoreScript.obstacleHitScoreValue++;
-            AddReward(-0.1f);
+            AddReward(-0.5f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;
@@ -129,7 +154,7 @@ public class CarAgent : Agent
         if (other.gameObject.tag == "Wall" && !hasPowerUp)
         {
             ScoreScript.wallHitScoreValue++;
-            AddReward(-0.1f);
+            AddReward(-0.5f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
             this.transform.position = curPos;

@@ -30,8 +30,10 @@ public class GameController : MonoBehaviour
             int randomCar = 0;
             int randomCarSpot = Random.Range(0, startPoints.Length);
 
-            int randomXValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -5) : Random.Range(8, 14);
-            int randomYValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -8) : Random.Range(3, 14);
+            //int randomXValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -5) : Random.Range(8, 14);
+            //int randomYValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -8) : Random.Range(3, 14);
+            float randomXValue = -3.8f;
+            float randomYValue = 12.2f;
             target.transform.position = new Vector3(randomXValue, 0.3f, randomYValue);
 
             car = Instantiate(carPrefabs[randomCar], startPoints[randomCarSpot].transform.position, startPoints[randomCarSpot].transform.rotation);
