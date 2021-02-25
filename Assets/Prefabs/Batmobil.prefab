@@ -619,13 +619,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 50000
-<<<<<<< HEAD
   carSpeed: 500
   carTurnSpeed: 3
-=======
-  carSpeed: 300
-  carTurnSpeed: 2
->>>>>>> 6e0289cc87a883441a42ccf66aebc163dd3e7501
   isStun: 0
   hasPowerUp: 0
 --- !u!114 &2201708393416912087
