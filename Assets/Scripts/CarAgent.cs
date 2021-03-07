@@ -16,7 +16,7 @@ public class CarAgent : Agent
     private Vector3 curPos, curRot;
     private GameObject target;
     private bool isColliding = false;
-    public float carSpeed = 500f;
+    public float carSpeed = 800f;
     public float carTurnSpeed = 3.0f;
     public bool isStun = true;
     public bool hasPowerUp = false;
@@ -24,6 +24,7 @@ public class CarAgent : Agent
     private float previousDistance = 0f;
     private GameObject[] obstacles;
     private GameObject[] walls;
+    private int episodeCount = 0; 
 
     public void setTarget(GameObject target)
     {
@@ -57,29 +58,42 @@ public class CarAgent : Agent
         {
             transform.Rotate(Vector3.up * carTurnSpeed);
         }
-        else 
+        else
         {
             transform.Rotate(Vector3.down * carTurnSpeed);
         }
 
-        float[] distanceToWalls = {0, 0, 0, 0};
-        for(int i = 0; i < 4; i++) {
+        float[] distanceToWalls = { 0, 0, 0, 0 };
+        for (int i = 0; i < 4; i++)
+        {
             distanceToWalls[i] = Vector3.Distance(this.transform.position, walls[i].transform.position);
-            if(distanceToWalls[i] < 2f) {
+            if (distanceToWalls[i] < 2f)
+            {
                 AddReward(Constants.CLOSE_TO_WALL_REWARD);
             }
         }
-        
+
+        float[] distanceToObstacles = { 0, 0, 0 };
+        for (int i = 0; i < 3; i++)
+        {
+            distanceToObstacles[i] = Vector3.Distance(this.transform.position, obstacles[i].transform.position);
+            if (distanceToObstacles[i] < 2f)
+            {
+                AddReward(Constants.CLOSE_TO_OBSTACLE_REWARD);
+            }
+        }
+
         float distanceToTarget = Vector3.Distance(this.transform.position, target.transform.position);
-        if (distanceToTarget < 2.5f) {
+        if (distanceToTarget < 2.5f)
+        {
             updateReward(Constants.CLOSEST_TO_TARGET_REWARD, distanceToTarget, false);
         }
         if (distanceToTarget < bestDistance)
         {
             updateReward(Constants.BEST_DISTANCE_TO_TARGET_REWARD, distanceToTarget, true);
-        } 
+        }
         else if (distanceToTarget < previousDistance)
-        { 
+        {
             updateReward(Constants.MOVING_TO_TARGET_REWARD, distanceToTarget, false);
         }
         else
@@ -89,9 +103,11 @@ public class CarAgent : Agent
         ScoreScript.rewardValue = GetCumulativeReward();
     }
 
-    private void updateReward(float reward, float distanceToTarget, bool updateBestDistance) {
+    private void updateReward(float reward, float distanceToTarget, bool updateBestDistance)
+    {
         AddReward(reward);
-        if(updateBestDistance) {
+        if (updateBestDistance)
+        {
             bestDistance = distanceToTarget;
         }
         previousDistance = distanceToTarget;
@@ -102,7 +118,7 @@ public class CarAgent : Agent
         actionsOut[0] = 0f;
         if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
-            actionsOut[0] = 1f; 
+            actionsOut[0] = 1f;
         }
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -138,7 +154,7 @@ public class CarAgent : Agent
         if (other.gameObject.tag == "Park")
         {
             ScoreScript.parkingScoreValue++;
-            AddReward(1f);
+            AddReward(5f);
             ScoreScript.rewardValue = GetCumulativeReward();
             EndEpisode();
         }
@@ -174,5 +190,8 @@ public class CarAgent : Agent
             this.transform.position = GameObject.Find("Portal_1").transform.position + offset;
             this.transform.eulerAngles = new Vector3(0, 135, 0);
         }
+        episodeCount = episodeCount + 1;
+        Debug.Log("Episode Count = " + episodeCount + " Park Score = " + ScoreScript.parkingScoreValue +
+            " Obstacle Hit Score = " + ScoreScript.obstacleHitScoreValue + " Wall Hit Score = " + ScoreScript.wallHitScoreValue);
     }
 }

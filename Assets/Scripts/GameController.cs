@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public GameObject[] startPoints;
     public GameObject target;
     public GameObject car;
+    public List<Vector3> goals;
 
     void Start()
     {
@@ -21,7 +22,20 @@ public class GameController : MonoBehaviour
         CarAgent.FindObjectOfType<CarAgent>().isStun = true;
         CarAgent.FindObjectOfType<CarAgent>().setTarget(target);
 
+        goals = new List<Vector3>();
+        goals.Add(new Vector3(-3.2f, 0.3f, 12f));
+        goals.Add(new Vector3(7f, 0.3f, 12f));
+        goals.Add(new Vector3(12f, 0.3f, 12f));
+
     }
+
+
+    Vector3 getGoalLocation()
+    {
+        int random = Random.Range(0, 3);
+        return goals[random];
+    }
+
     void Update()
     {
         if (ParkControler.FindObjectOfType<ParkControler>().hasPark == true)
@@ -30,12 +44,7 @@ public class GameController : MonoBehaviour
             int randomCar = 0;
             int randomCarSpot = Random.Range(0, startPoints.Length);
 
-            //int randomXValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -5) : Random.Range(8, 14);
-            //int randomYValue = Random.Range(1, 3) == 1 ? Random.Range(-14, -8) : Random.Range(3, 14);
-            float randomXValue = -3.8f;
-            float randomYValue = 12.2f;
-            target.transform.position = new Vector3(randomXValue, 0.3f, randomYValue);
-
+            target.transform.position = getGoalLocation();
             car = Instantiate(carPrefabs[randomCar], startPoints[randomCarSpot].transform.position, startPoints[randomCarSpot].transform.rotation);
             Instantiate(parkPrefabs[0], target.transform.position, target.transform.rotation);
             //Instantiate(powerUpPrefab, PowerUpSpawnPosition(), powerUpPrefab.transform.rotation);

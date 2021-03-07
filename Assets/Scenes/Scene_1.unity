@@ -1400,9 +1400,9 @@ MonoBehaviour:
   - {fileID: 4166520624289731115, guid: 44d9865efa0eec64c98daf9dcce2fb8d, type: 3}
   startPoints:
   - {fileID: 311616022}
-  - {fileID: 1467058862}
   target: {fileID: 683304407}
   car: {fileID: 0}
+  goals: []
 --- !u!4 &546536100
 Transform:
   m_ObjectHideFlags: 0
