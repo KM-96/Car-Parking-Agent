@@ -16,7 +16,7 @@ public class CarAgent : Agent
     private Vector3 curPos, curRot;
     private GameObject target;
     private bool isColliding = false;
-    public float carSpeed = 800f;
+    public float carSpeed = 400f;
     public float carTurnSpeed = 3.0f;
     public bool isStun = true;
     public bool hasPowerUp = false;
@@ -128,6 +128,7 @@ public class CarAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        sensor.AddObservation((target.transform.position - this.transform.position).normalized);
         sensor.AddObservation(this.transform.InverseTransformPoint(target.transform.position).normalized);
         sensor.AddObservation(this.transform.InverseTransformPoint(obstacles[0].transform.position).normalized);
         sensor.AddObservation(this.transform.InverseTransformPoint(obstacles[1].transform.position).normalized);

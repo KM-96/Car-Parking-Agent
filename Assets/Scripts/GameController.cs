@@ -26,13 +26,15 @@ public class GameController : MonoBehaviour
         goals.Add(new Vector3(-3.2f, 0.3f, 12f));
         goals.Add(new Vector3(7f, 0.3f, 12f));
         goals.Add(new Vector3(12f, 0.3f, 12f));
+        goals.Add(new Vector3(1f, 0.3f, -11f));
+        goals.Add(new Vector3(1f, 0.3f, 1f));
 
     }
 
 
     Vector3 getGoalLocation()
     {
-        int random = Random.Range(0, 3);
+        int random = Random.Range(0, 5);
         return goals[random];
     }
 
