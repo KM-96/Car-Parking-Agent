@@ -8,10 +8,12 @@ We found an open source 3D game developed in Unity and made modifications to it 
 
 ### Level 1
 Level 1 of the game consists of a bounded arena with a car starting at an arbitrary position and a parking spot appearing at another random position. The goal location or parking spot is highlighted in red color. The car has to first identify the highlighted spot and then navigate towards it through three obstacles that are placed in the center of the arena.
+
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/37352722/85719927-95d30280-b6f8-11ea-8be9-9c27e29541e7.gif)
 
 ### Level 2
 Level 2 unlike level 1 is more complex. It consists of a bounded arena similar to level 1 but with moving obstacles and portals to navigate to different storeys. The car will start at an arbitrary position and a parking spot will appear on the same storey or a path will be highlighted to another storey. The car has to identify the highlighted parking spot or storey entrance and navigate through moving obstacles in the arena to reach the parking spot. The objects in the yellow color in the Fig2 are obstacles which move parallel to the walls of the arena and the object is green color is the portal that can help navigate to different storeys.
+
 ![ezgif com-video-to-gif (1)](https://user-images.githubusercontent.com/37352722/85720532-3295a000-b6f9-11ea-93ac-7227a5be51c1.gif)
 
 ## Game modifications
@@ -63,7 +65,7 @@ ends and the agent is starting again at the start location to park at the same h
 
 ## Training and Results
 For more information about the training and results of the agent, please refer to the 
-documentation in the website [here](https://usc-csci527-spring2021.github.io/Park-It-Right-/index.html)
+documentation in the website [here](https://usc-csci527-spring2021.github.io/Park-It-Right-/index.html).
 
 ## Contact
 If you want to contact me you can reach me at <km69564@usc.edu> or <krishnamanoj14@gmail.com>.
