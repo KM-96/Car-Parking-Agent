@@ -510,11 +510,11 @@ GameObject:
   - component: {fileID: 9072589858213667644}
   - component: {fileID: 659339997987954043}
   - component: {fileID: -7490361952049570920}
-  - component: {fileID: 2201708393416912087}
   - component: {fileID: 5622077405023322887}
-  - component: {fileID: 2530805280619486729}
+  - component: {fileID: 3488935904419460505}
+  - component: {fileID: -2404147938443102729}
   m_Layer: 0
-  m_Name: Batmobil
+  m_Name: Level2Car
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,9 +583,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 27
-    NumStackedVectorObservations: 1
-    VectorActionSize: 03000000
+    VectorObservationSize: 57
+    NumStackedVectorObservations: 3
+    VectorActionSize: 0300000002000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
   m_Model: {fileID: 0}
@@ -594,7 +594,43 @@ MonoBehaviour:
   m_BehaviorName: MoveToGoalAgent
   TeamId: 0
   m_UseChildSensors: 1
---- !u!114 &2201708393416912087
+--- !u!114 &5622077405023322887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314483756655966237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 1
+  DemonstrationName: CarAgent
+  DemonstrationDirectory: ILL21S2G-CO-R1
+--- !u!114 &3488935904419460505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6314483756655966237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 967d3bc774975458b8bf1df7c289effa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 50000
+  accelaration: 100
+  carSpeed: 800
+  carTurnSpeed: 3
+  isStun: 1
+  hasPowerUp: 0
+--- !u!114 &-2404147938443102729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -606,43 +642,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 3
+  DecisionPeriod: 1
   TakeActionsBetweenDecisions: 0
---- !u!114 &5622077405023322887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6314483756655966237}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Record: 0
-  DemonstrationName: 
-  DemonstrationDirectory: 
---- !u!114 &2530805280619486729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6314483756655966237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e05d23b083f7a54c88c67fb5b3b9b0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  carSpeed: 800
-  carTurnSpeed: 3
-  isStun: 1
-  hasPowerUp: 0
 --- !u!1 &6314483756816805052
 GameObject:
   m_ObjectHideFlags: 0

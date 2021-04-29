@@ -25,7 +25,14 @@ public class MenuController : MonoBehaviour
     }
     public void StopFreeze()
     {
-        CarAgent.FindObjectOfType<CarAgent>().isStun = false;
+        if (SceneManager.GetActiveScene().name == "Scene_1")
+        {
+            CarAgent.FindObjectOfType<CarAgent>().isStun = false;
+        }
+        if (SceneManager.GetActiveScene().name == "Scene_2")
+        {
+            CarAgentForLevel2.FindObjectOfType<CarAgentForLevel2>().isStun = false;
+        }   
     }
     public void firstLevel()
     {

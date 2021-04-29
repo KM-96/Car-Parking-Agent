@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class obstaclePatrol : MonoBehaviour
 {
-    float speed = 10.0f;
+    float speed = 2f;
 
     void Update()
     {
